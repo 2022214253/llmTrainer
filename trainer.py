@@ -1,39 +1,39 @@
-import argparse
-from transformers import AutoModelForSequenceClassification,AutoTokenizer
-from datasets import load_from_disk,load_dataset
-import evaluate
-from peft import LoraConfig,get_peft_model,TaskType
-import numpy as np
-import torch
-import os
-from transformers import Trainer,TrainingArguments
-import logging
+import
+fromimport
+fromimport
+import
+fromimport
+importas
+import
+import
+fromimport
+import
 
-def create_dataset(data_path:str):
-    if os.path.exists(data_path):
-        data=load_from_disk(data_path)
-    else:
-        logging.info(f"Loading dataset from {data_path}")
-        data=load_dataset(data_path)
-    return data
+def create_dataset()
+    ifpathexists()
+load_from_disk()
+    else
+info(f"Loading dataset from {}")
+load_dataset()
+    return
 
-def bulid_model(model_path,num_labels):
-    logging.info(f"Loading modeland tokenier from {model_path}")
-    model=AutoModelForSequenceClassification.from_pretrained(model_path,num_labels=num_labels)
-    tokenier=AutoTokenizer.from_pretrained(model_path)
-    return model,tokenier
+def bulid_model()
+info(f"Loading modeland tokenier from {}")
+from_pretrained()
+from_pretrained()
+    return
 
-def data_preocessing(data,tokenier,max_length=512):
-    return tokenier(data['text'],truncation=True,padding=True,max_length=max_length,return_tensors='pt')
+def data_preocessing(512)
+    return tokenier(['text'])
 
-def load_mertic(metric):
-    logging.info(f"loading {metric} metric")
-    way=evaluate.load(metric)
-    return way
+def load_mertic()
+info(f"loading {} metric")
+load()
+    return
 
-def metric_comp(eval_pred,metric):
+def metric_comp()
     pred,true=eval_pred
-    pred=np.argmax(pred,axis=-1)
+argmax(1)
     return metric.compute(predictions=pred, references=true)
 
 def train(out_dir,model,data,train_batch=32,val_batch=32,epochs=5):
